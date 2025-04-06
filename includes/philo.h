@@ -6,7 +6,7 @@
 /*   By: rdalal <rdalal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 17:38:27 by rdalal            #+#    #+#             */
-/*   Updated: 2025/04/04 19:32:28 by rdalal           ###   ########.fr       */
+/*   Updated: 2025/04/06 19:06:57 by rdalal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <strings.h>
 # include <pthread.h>
 
+
+/*structs*/
 typedef struct s_philo{
 	int					id;
 	int					last_meal_time;
@@ -38,6 +40,8 @@ typedef struct s_table{
 	int				meals_required;
 	pthread_mutex_t	*forks;
 }					t_table;
+
+/*functions*/
 
 
 #endif
