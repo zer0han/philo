@@ -6,7 +6,7 @@
 /*   By: rdalal <rdalal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 17:38:27 by rdalal            #+#    #+#             */
-/*   Updated: 2025/04/06 19:06:57 by rdalal           ###   ########.fr       */
+/*   Updated: 2025/04/07 18:44:33 by rdalal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@
 
 
 /*structs*/
-typedef struct s_philo{
+typedef struct s_philo
+{
 	int					id;
 	int					last_meal_time;
 	int					meals_eaten;
@@ -32,7 +33,8 @@ typedef struct s_philo{
 	pthread_mutex_t		*right_fork;
 }						t_philo;
 
-typedef struct s_table{
+typedef struct s_table
+{
 	int				nbr_philos;
 	int				time_to_die;
 	int				time_to_eat;
