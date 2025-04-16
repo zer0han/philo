@@ -6,7 +6,7 @@
 #    By: rdalal <rdalal@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/04 17:37:52 by rdalal            #+#    #+#              #
-#    Updated: 2025/04/06 22:22:58 by rdalal           ###   ########.fr        #
+#    Updated: 2025/04/15 15:35:09 by rdalal           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,9 @@ CC		= cc
 
 CFLAGS	= -Wextra -Wall -Werror
 
-SRCS_UTILS	=
+SRCS_UTILS	= error_handling.c utils.c exec.c parse.c main.c
 
-SRCS_UTILS_PATH	= 
+SRCS_UTILS_PATH	= srcs/
 
 SRCS	=	$(addprefix $(SRCS_UTILS_PATH), $(SRCS_UTILS)) \
 
@@ -39,12 +39,18 @@ $(NAME):	$(OBJS) $(HEAD)
 
 clean:	root-clean
 		@echo "$(RED)🧹 CLEANED OBJECT FILES 🧹$(RESET)"
+		@echo "$(GREEN)"
+		@cat ascii_art_fclean.txt
+		@echo "$(RESET)"
 	
 root-clean:
 			@rm -f $(OBJS)
 
 fclean: root-fclean
 		@echo "$(RED) 🧹🧹 FULL CLEAN COMPLETE 🧹🧹$(RESET)"
+		@echo "$(GREEN)"
+		@cat ascii_art_fclean.txt
+		@echo "$(RESET)"
 
 root-fclean: root-clean
 			@rm -f $(NAME)
