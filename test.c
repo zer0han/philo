@@ -6,7 +6,7 @@
 /*   By: rdalal <rdalal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:50:36 by rdalal            #+#    #+#             */
-/*   Updated: 2025/04/16 20:52:50 by rdalal           ###   ########.fr       */
+/*   Updated: 2025/04/17 13:52:31 by rdalal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@
 
 int bal = 0;
 
+pthread_mutex_t	mutex;
+
 void	write_balance(int new_bal)
 {
 	usleep(250000);
@@ -80,9 +82,11 @@ int	read_balance()
 
 void	*deposit(void *amt)
 {
+	pthread_mutex_lock(&mutex);
 	int	account_bal = read_balance();
 	account_bal += *((int *) amt);
 	write_balance(account_bal);
+	pthread_mutex_unlock(&mutex);
 	return (NULL);
 }
 
@@ -92,13 +96,15 @@ int	main()
 	printf("before: %d\n", before);
 	pthread_t	thread1;
 	pthread_t	thread2;
-	int			dep1 = 200;
-	int			dep2 = 300;
+	pthread_mutex_init(&mutex, NULL);
+	int			dep1 = 300;
+	int			dep2 = 200;
 	
 	pthread_create(&thread1, NULL, deposit, (void *) &dep1);
 	pthread_create(&thread2, NULL, deposit, (void *) &dep2);
 	pthread_join(thread1, NULL);
 	pthread_join(thread2, NULL);
+	pthread_mutex_destroy(&mutex);
 	int	after = read_balance();
 	printf("after: %d\n", after);
 	return(0);

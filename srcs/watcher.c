@@ -6,9 +6,13 @@
 /*   By: rdalal <rdalal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:16:38 by rdalal            #+#    #+#             */
-/*   Updated: 2025/04/15 16:16:49 by rdalal           ###   ########.fr       */
+/*   Updated: 2025/04/17 15:13:52 by rdalal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+void	*moniter_philos(void *arg)
+{
+	
+}

@@ -6,7 +6,7 @@
 /*   By: rdalal <rdalal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 17:38:27 by rdalal            #+#    #+#             */
-/*   Updated: 2025/04/15 16:53:19 by rdalal           ###   ########.fr       */
+/*   Updated: 2025/04/17 16:10:16 by rdalal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,15 @@
 # include <strings.h>
 # include <sys/time.h>
 # include <pthread.h>
+# include <semaphore.h>
 
 
 /*structs*/
 typedef struct s_philo
 {
 	int					id;
-	int					last_meal_time;
+	long				last_meal_time;
 	int					meals_eaten;
-	int					philo_nums;
-	int					*dead;
 	pthread_t			thread;
 	pthread_mutex_t		*left_fork;
 	pthread_mutex_t		*right_fork;
@@ -41,15 +40,33 @@ typedef struct s_philo
 typedef struct s_table
 {
 	int				nbr_philos;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
+	long			time_to_die;
+	long			time_to_eat;
+	long			time_to_sleep;
 	int				meals_required;
+	int				dead_philo;
+	long			start_time;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	print_mutex;
 	t_philo			*philos;
 }					t_table;
 
 /*functions*/
 
+/**utils**/
+int		ft_atoi(const char *str);
+long	get_time(void);
+void	sleep(long duration);
+void	print_action(int id, const char *msg, t_table *table);
 
+/**init**/
+int		init_table(t_table *table, int argc, char **argv);
+int		init_philos(t_table *table);
+int		init_mutexes(t_table *table);
+
+/**philo**/
+void	*philo_routine(void *arg);
+
+/**watcher**/
+void	*moniter_philos(void *arg);
 #endif
