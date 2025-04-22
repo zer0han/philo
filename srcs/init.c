@@ -6,7 +6,7 @@
 /*   By: rdalal <rdalal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:41:16 by rdalal            #+#    #+#             */
-/*   Updated: 2025/04/22 20:10:10 by rdalal           ###   ########.fr       */
+/*   Updated: 2025/04/22 20:43:18 by rdalal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,12 @@ int	init_philos(t_table *table)
 	{
 		table->philos[i].id = i + 1;
 		table->philos[i].meals_eaten = 0;
-		table->philos[i].last_meal_time = 0;
 		table->philos[i].left_fork = &table->forks[i];
 		table->philos[i].right_fork = &table->forks[(i + 1) % table->nbr_philos];
 		table->philos[i].table = table;
+		table->philos[i].last_meal_time = get_time();
+		if (pthread_create(&table->philos[i].thread, NULL, philo_routine, &table->philos[i]))
+			return (1);
 		i++;
 	}
 	return (0);
