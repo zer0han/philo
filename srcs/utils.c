@@ -6,7 +6,7 @@
 /*   By: rdalal <rdalal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:41:23 by rdalal            #+#    #+#             */
-/*   Updated: 2025/04/17 15:16:49 by rdalal           ###   ########.fr       */
+/*   Updated: 2025/04/22 20:09:12 by rdalal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,29 @@ int	ft_atoi(const char *str)
 
 long	get_time(void)
 {
-	
+	struct	timeval	tv;
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
-void	sleep(long duration)
+void	sleeps(long duration)
 {
-	
+	long	start;
+
+	start = get_time();
+	while ((get_time() - start) < duration)
+		usleep(100);
 }
 
-void	print_action(int id, const char *msg, t_table *table)
+void	print_action(t_philo *philo, char *msg)
 {
-		
+	long	time_stamp;
+	
+	pthread_mutex_lock(&philo->table->print_mutex);
+	if (!philo->table->dead_philo)
+	{
+		time_stamp = get_time() - philo->table->start_time;
+		printf("%ld %d %s\n", time_stamp, philo->id, msg);
+	}
+	pthread_mutex_unlock(&philo->table->print_mutex);
 }

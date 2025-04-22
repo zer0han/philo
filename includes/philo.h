@@ -6,7 +6,7 @@
 /*   By: rdalal <rdalal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 17:38:27 by rdalal            #+#    #+#             */
-/*   Updated: 2025/04/17 16:10:16 by rdalal           ###   ########.fr       */
+/*   Updated: 2025/04/22 19:50:50 by rdalal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@
 
 
 /*structs*/
+
+typedef struct s_table	t_table;
+
 typedef struct s_philo
 {
 	int					id;
@@ -35,9 +38,10 @@ typedef struct s_philo
 	pthread_mutex_t		*right_fork;
 	pthread_mutex_t		*dead_lock;
 	pthread_mutex_t		*meal_lock;
+	t_table				*table;
 }						t_philo;
 
-typedef struct s_table
+struct s_table
 {
 	int				nbr_philos;
 	long			time_to_die;
@@ -48,16 +52,17 @@ typedef struct s_table
 	long			start_time;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_mutex;
+	pthread_mutex_t	death_mutex;
 	t_philo			*philos;
-}					t_table;
+};
 
 /*functions*/
 
 /**utils**/
 int		ft_atoi(const char *str);
 long	get_time(void);
-void	sleep(long duration);
-void	print_action(int id, const char *msg, t_table *table);
+void	sleeps(long duration);
+void	print_action(t_philo *philo, char *msg);
 
 /**init**/
 int		init_table(t_table *table, int argc, char **argv);

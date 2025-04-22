@@ -6,7 +6,7 @@
 #    By: rdalal <rdalal@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/04 17:37:52 by rdalal            #+#    #+#              #
-#    Updated: 2025/04/15 15:35:09 by rdalal           ###   ########.fr        #
+#    Updated: 2025/04/22 20:09:45 by rdalal           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CC		= cc
 
 CFLAGS	= -Wextra -Wall -Werror
 
-SRCS_UTILS	= error_handling.c utils.c exec.c parse.c main.c
+SRCS_UTILS	= error_handling.c utils.c init.c philo.c main.c watcher.c
 
 SRCS_UTILS_PATH	= srcs/
 
