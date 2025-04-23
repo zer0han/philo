@@ -6,7 +6,7 @@
 /*   By: rdalal <rdalal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:16:38 by rdalal            #+#    #+#             */
-/*   Updated: 2025/04/22 20:41:07 by rdalal           ###   ########.fr       */
+/*   Updated: 2025/04/23 20:29:16 by rdalal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,14 @@ void	*moniter_philos(void *arg)
 			pthread_mutex_unlock(&table->death_mutex);
 			i++;
 		}
+		pthread_mutex_lock(&table->meal_mutex);
+		if (table->meals_required != -1 && table->philo_ate == table->nbr_philos)
+		{
+			printf("[debug] all ate lessgo bye bye\n");
+			pthread_mutex_unlock(&table->meal_mutex);
+			return (NULL);
+		}
+		pthread_mutex_unlock(&table->meal_mutex);
 		usleep(1000);
 	}
 }

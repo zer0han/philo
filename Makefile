@@ -6,7 +6,7 @@
 #    By: rdalal <rdalal@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/04 17:37:52 by rdalal            #+#    #+#              #
-#    Updated: 2025/04/22 20:09:45 by rdalal           ###   ########.fr        #
+#    Updated: 2025/04/23 20:05:19 by rdalal           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ root-clean:
 
 fclean: root-fclean
 		@echo "$(RED) 🧹🧹 FULL CLEAN COMPLETE 🧹🧹$(RESET)"
-		@echo "$(GREEN)"
+		@echo "$(BABEBLUEB)"
 		@cat ascii_art_fclean.txt
 		@echo "$(RESET)"
 
@@ -64,13 +64,15 @@ RESET = \033[0m
 BOLD = \033[1m
 GREEN = \033[1;32m
 BLUE = \033[1;34m
+BABEBLUEB = \033[1;38;5;153m
 RED = \033[1;31m
+PSTL_ORGB = \033[1;38;2;255;179;102m
 YELLOW = \033[1;33m
 
 define print_flag
 	@echo "$(GREEN) 🚀 COMPILATION COMPLETE 🚀$(RESET)"
 	@echo "$(BLUE).☆.｡.:*・°･.｡*･.｡* .☆.｡.:*.☆.｡.:*・°･.｡*･.｡*.☆.｡.:*.☆.｡.:*.☆.｡.:*.☆.｡.:*.☆.｡.:*.☆.｡.:*.☆.｡.:*$(RESET)"
-	@echo "$(GREEN)"
+	@echo "$(PSTL_ORGB)"
 	@cat ascii_art.txt
 	@echo ""
 	@echo "$(RESET)"
