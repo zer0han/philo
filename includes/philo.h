@@ -6,7 +6,7 @@
 /*   By: rdalal <rdalal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 17:38:27 by rdalal            #+#    #+#             */
-/*   Updated: 2025/04/23 19:27:51 by rdalal           ###   ########.fr       */
+/*   Updated: 2025/04/24 21:45:47 by rdalal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@
 # include <pthread.h>
 # include <semaphore.h>
 
+
+# define TAKE_FORK "has taken a fork"
+# define EATING "is eating"
+# define SLEEPING "is sleeping"
+# define THINKING "is thinking"
+# define DEAD "is dead"
 
 /*structs*/
 
@@ -49,7 +55,8 @@ struct s_table
 	long			time_to_sleep;
 	int				meals_required;
 	int				dead_philo;
-	int				philo_ate;
+	int				meal_count;
+	int				stop_simulation;
 	long			start_time;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_mutex;
@@ -60,20 +67,30 @@ struct s_table
 
 /*functions*/
 
+/**clean**/
+void	destroy_mutexes(t_table *table);
+int		error_msg(char *msg);
+
 /**utils**/
 int		ft_atoi(const char *str);
 long	get_time(void);
-void	sleeps(long duration);
+void	ft_sleep(long duration);
 void	print_action(t_philo *philo, char *msg);
 
 /**init**/
 int		init_table(t_table *table, int argc, char **argv);
-int		init_philos(t_table *table);
+void	init_philos(t_table *table);
 int		init_mutexes(t_table *table);
 
+/**philo_life**/
+void	*philo_life(void *arg);
+
 /**philo**/
-void	*philo_routine(void *arg);
+int		check_stop(t_table *table);
+int		philo_eat(t_philo *philo);
 
 /**watcher**/
-void	*moniter_philos(void *arg);
+int		check_death(t_philo *philo);
+int		check_meal(t_table *table);
+void	*monitor_philo(void *arg);
 #endif

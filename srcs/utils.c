@@ -6,7 +6,7 @@
 /*   By: rdalal <rdalal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:41:23 by rdalal            #+#    #+#             */
-/*   Updated: 2025/04/22 20:09:12 by rdalal           ###   ########.fr       */
+/*   Updated: 2025/04/24 20:56:03 by rdalal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ long	get_time(void)
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
-void	sleeps(long duration)
+void	ft_sleep(long duration)
 {
 	long	start;
 
