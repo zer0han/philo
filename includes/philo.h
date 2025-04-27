@@ -6,7 +6,7 @@
 /*   By: rdalal <rdalal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 17:38:27 by rdalal            #+#    #+#             */
-/*   Updated: 2025/04/24 21:45:47 by rdalal           ###   ########.fr       */
+/*   Updated: 2025/04/27 22:24:10 by rdalal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/time.h>
 # include <pthread.h>
 # include <semaphore.h>
+# include <stdbool.h>
 
 
 # define TAKE_FORK "has taken a fork"
@@ -29,6 +30,7 @@
 # define SLEEPING "is sleeping"
 # define THINKING "is thinking"
 # define DEAD "is dead"
+# define MAX_PHILOS 200
 
 /*structs*/
 
@@ -36,14 +38,14 @@ typedef struct s_table	t_table;
 
 typedef struct s_philo
 {
-	int					id;
-	long				last_meal_time;
-	int					meals_eaten;
-	pthread_t			thread;
-	pthread_mutex_t		*left_fork;
-	pthread_mutex_t		*right_fork;
-	pthread_mutex_t		*dead_lock;
-	pthread_mutex_t		*meal_lock;
+	int				id;
+	long			last_meal_time;
+	int				meals_eaten;
+	pthread_t		thread;
+	pthread_mutex_t	*left_fork;
+	pthread_mutex_t	*right_fork;
+//	pthread_mutex_t	*dead_lock;
+	pthread_mutex_t	meal_mutex;
 	t_table				*table;
 }						t_philo;
 
@@ -54,43 +56,45 @@ struct s_table
 	long			time_to_eat;
 	long			time_to_sleep;
 	int				meals_required;
-	int				dead_philo;
-	int				meal_count;
-	int				stop_simulation;
+	//int				dead_philo;
+//	int				meal_count;
+	bool			stop;
 	long			start_time;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_mutex;
-	pthread_mutex_t	death_mutex;
-	pthread_mutex_t	meal_mutex;
+	pthread_mutex_t	stop_mutex;
+	//pthread_mutex_t	death_mutex;
+	
 	t_philo			*philos;
 };
 
 /*functions*/
 
 /**clean**/
-void	destroy_mutexes(t_table *table);
+void	cleanup(t_table *table);
 int		error_msg(char *msg);
 
 /**utils**/
 int		ft_atoi(const char *str);
+int		start_threads(t_table *table);
 long	get_time(void);
-void	ft_sleep(long duration);
-void	print_action(t_philo *philo, char *msg);
+void	ft_sleep(long duration, t_table *table);
 
 /**init**/
 int		init_table(t_table *table, int argc, char **argv);
-void	init_philos(t_table *table);
+int		init_philos(t_table *table);
 int		init_mutexes(t_table *table);
 
 /**philo_life**/
-void	*philo_life(void *arg);
+// void	*philo_life(void *arg);
 
 /**philo**/
-int		check_stop(t_table *table);
-int		philo_eat(t_philo *philo);
+void	print_action(t_philo *philo, char *msg);
+bool	check_stop(t_table *table);
+void	philo_eat(t_philo *philo);
+int		take_fork(t_philo *philo);
 
 /**watcher**/
-int		check_death(t_philo *philo);
-int		check_meal(t_table *table);
-void	*monitor_philo(void *arg);
+void	*philo_routine(void *arg);
+void	*monitor(void *arg);
 #endif

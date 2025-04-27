@@ -6,13 +6,13 @@
 /*   By: rdalal <rdalal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:41:11 by rdalal            #+#    #+#             */
-/*   Updated: 2025/04/24 20:55:42 by rdalal           ###   ########.fr       */
+/*   Updated: 2025/04/27 22:08:58 by rdalal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	destroy_mutexes(t_table *table)
+void	cleanup(t_table *table)
 {
 	int	i;
 
@@ -20,11 +20,12 @@ void	destroy_mutexes(t_table *table)
 	while (i < table->nbr_philos)
 	{
 		pthread_mutex_destroy(&table->forks[i]);
+		pthread_mutex_destroy(&table->philos[i].meal_mutex);
 		i++;
 	}
+	free(table->philos);
 	pthread_mutex_destroy(&table->print_mutex);
-	pthread_mutex_destroy(&table->death_mutex);
-	pthread_mutex_destroy(&table->meal_mutex);
+	pthread_mutex_destroy(&table->stop_mutex);
 }
 
 int	error_msg(char *msg)

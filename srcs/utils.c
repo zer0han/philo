@@ -6,7 +6,7 @@
 /*   By: rdalal <rdalal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:41:23 by rdalal            #+#    #+#             */
-/*   Updated: 2025/04/24 20:56:03 by rdalal           ###   ########.fr       */
+/*   Updated: 2025/04/27 22:14:54 by rdalal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,24 +45,38 @@ long	get_time(void)
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
-void	ft_sleep(long duration)
+int	start_threads(t_table *table)
+{
+	int			i;
+	pthread_t	monitor_th;
+
+	i = 0;
+	while (i < table->nbr_philos)
+	{
+		if (pthread_create(&table->philos[i].thread, NULL, \
+			philo_routine, &table->philos[i]))
+			return (1);
+		i++;
+	}
+	if (pthread_create(&monitor_th, NULL, monitor, table))
+		return (1);
+	i = 0;
+	while (i < table->nbr_philos)
+	{
+		pthread_join(table->philos[i].thread, NULL);
+		i++;
+	}
+	pthread_join(monitor_th, NULL);
+	return (0);
+}
+
+void	ft_sleep(long duration, t_table *table)
 {
 	long	start;
 
 	start = get_time();
-	while ((get_time() - start) < duration)
+	while (!check_stop(table) && (get_time() - start) < duration)
 		usleep(100);
 }
 
-void	print_action(t_philo *philo, char *msg)
-{
-	long	time_stamp;
-	
-	pthread_mutex_lock(&philo->table->print_mutex);
-	if (!philo->table->dead_philo)
-	{
-		time_stamp = get_time() - philo->table->start_time;
-		printf("%ld %d %s\n", time_stamp, philo->id, msg);
-	}
-	pthread_mutex_unlock(&philo->table->print_mutex);
-}
+
