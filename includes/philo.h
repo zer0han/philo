@@ -6,7 +6,7 @@
 /*   By: rdalal <rdalal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 17:38:27 by rdalal            #+#    #+#             */
-/*   Updated: 2025/04/28 20:59:56 by rdalal           ###   ########.fr       */
+/*   Updated: 2025/04/28 21:20:16 by rdalal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,6 @@ void	ft_sleep(long duration, t_table *table);
 int		init_table(t_table *table, int argc, char **argv);
 int		init_philos(t_table *table);
 int		init_mutexes(t_table *table);
-
-/**philo_life**/
-// void	*philo_life(void *arg);
 
 /**philo**/
 void	print_action(t_philo *philo, char *msg);
