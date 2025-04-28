@@ -6,7 +6,7 @@
 /*   By: rdalal <rdalal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 17:38:27 by rdalal            #+#    #+#             */
-/*   Updated: 2025/04/27 22:24:10 by rdalal           ###   ########.fr       */
+/*   Updated: 2025/04/28 20:59:56 by rdalal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 # include <pthread.h>
 # include <semaphore.h>
 # include <stdbool.h>
-
 
 # define TAKE_FORK "has taken a fork"
 # define EATING "is eating"
@@ -44,10 +43,9 @@ typedef struct s_philo
 	pthread_t		thread;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
-//	pthread_mutex_t	*dead_lock;
 	pthread_mutex_t	meal_mutex;
-	t_table				*table;
-}						t_philo;
+	t_table			*table;
+}					t_philo;
 
 struct s_table
 {
@@ -56,15 +54,11 @@ struct s_table
 	long			time_to_eat;
 	long			time_to_sleep;
 	int				meals_required;
-	//int				dead_philo;
-//	int				meal_count;
 	bool			stop;
 	long			start_time;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_mutex;
-	pthread_mutex_t	stop_mutex;
-	//pthread_mutex_t	death_mutex;
-	
+	pthread_mutex_t	stop_mutex;	
 	t_philo			*philos;
 };
 

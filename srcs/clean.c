@@ -6,7 +6,7 @@
 /*   By: rdalal <rdalal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:41:11 by rdalal            #+#    #+#             */
-/*   Updated: 2025/04/27 22:08:58 by rdalal           ###   ########.fr       */
+/*   Updated: 2025/04/28 19:52:23 by rdalal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	cleanup(t_table *table)
 		i++;
 	}
 	free(table->philos);
+	free(table->forks);
 	pthread_mutex_destroy(&table->print_mutex);
 	pthread_mutex_destroy(&table->stop_mutex);
 }

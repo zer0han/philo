@@ -6,7 +6,7 @@
 /*   By: rdalal <rdalal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:41:23 by rdalal            #+#    #+#             */
-/*   Updated: 2025/04/27 22:14:54 by rdalal           ###   ########.fr       */
+/*   Updated: 2025/04/28 21:01:28 by rdalal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	ft_atoi(const char *str)
 	int	i;
 	int	nb;
 	int	sign;
-
 
 	i = 0;
 	nb = 0;
@@ -35,12 +34,13 @@ int	ft_atoi(const char *str)
 		nb = nb * 10 + (str[i] - 48);
 		i++;
 	}
-	return (nb *sign);
+	return (nb * sign);
 }
 
 long	get_time(void)
 {
-	struct	timeval	tv;
+	struct timeval	tv;
+
 	gettimeofday(&tv, NULL);
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
@@ -78,5 +78,3 @@ void	ft_sleep(long duration, t_table *table)
 	while (!check_stop(table) && (get_time() - start) < duration)
 		usleep(100);
 }
-
-

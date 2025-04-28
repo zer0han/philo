@@ -6,79 +6,11 @@
 /*   By: rdalal <rdalal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:16:38 by rdalal            #+#    #+#             */
-/*   Updated: 2025/04/27 22:24:32 by rdalal           ###   ########.fr       */
+/*   Updated: 2025/04/28 21:17:03 by rdalal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-// int	check_death(t_philo *philo)
-// {
-// 	t_table	*table;
-// 	long	time;
-
-// 	table = philo->table;
-// 	pthread_mutex_lock(&table->death_mutex);
-// 	time = get_time() - philo->last_meal_time;
-// 	if (time >= table->time_to_die && !table->stop_simulation)
-// 	{
-// 		table->stop_simulation = 1;
-// 		pthread_mutex_lock(&table->print_mutex);
-// 		printf("%ld %d %s\n", get_time() - table->start_time, philo->id, DEAD);
-// 		pthread_mutex_unlock(&table->print_mutex);
-// 		pthread_mutex_unlock(&table->death_mutex);
-// 		return (1);
-// 	}
-// 	pthread_mutex_unlock(&table->death_mutex);
-// 	return (0);
-// }
-
-// int	check_meal(t_table *table)
-// {
-// 	int	done;
-
-// 	done = 0;
-// 	if (table->meals_required == -1)
-// 		return (0);
-// 	pthread_mutex_lock(&table->meal_mutex);
-// 	if (table->meal_count >= table->nbr_philos && !table->stop_simulation)
-// 	{
-// 		pthread_mutex_lock(&table->death_mutex);
-// 		table->stop_simulation = 1;
-// 		pthread_mutex_unlock(&table->death_mutex);
-// 		done = 1;
-// 	}
-// 	pthread_mutex_unlock(&table->meal_mutex);
-// 	return (done);
-// }
-
-// void	*monitor_philo(void *arg)
-// {
-// 	t_table	*table;
-// 	int		i;
-
-// 	table =(t_table *)arg;
-// 	while (!check_stop(table))
-// 	{
-// 		i = 0;
-// 		while (i < table->nbr_philos)
-// 		{
-// 			if (check_death(&table->philos[i]))
-// 				return (NULL);
-// 			i++;
-// 		}
-// 		if (check_meal(table))
-// 		{
-// 			pthread_mutex_lock(&table->print_mutex)	;
-// 			printf("all ate\n");
-// 			pthread_mutex_unlock(&table->print_mutex);
-// 			return (NULL);
-// 		}
-// 		ft_sleep(1, table);
-// 	}
-// 	return (NULL);
-// }
-
 
 void	*philo_routine(void *arg)
 {
@@ -122,30 +54,40 @@ static bool	check_meals(t_table *table)
 	return (full_count == table->nbr_philos);
 }
 
+static bool	philo_death_check(t_table *table)
+{
+	int		i;
+	long	time_since_meal;
+
+	i = 0;
+	while (i < table->nbr_philos)
+	{
+		pthread_mutex_lock(&table->philos[i].meal_mutex);
+		time_since_meal = get_time() - table->philos[i].last_meal_time;
+		pthread_mutex_unlock(&table->philos[i].meal_mutex);
+		if (time_since_meal > table->time_to_die)
+		{
+			pthread_mutex_lock(&table->stop_mutex);
+			if (!table->stop)
+				table->stop = true;
+			pthread_mutex_unlock(&table->stop_mutex);
+			print_action(&table->philos[i], DEAD);
+			return (true);
+		}
+		i++;
+	}
+	return (NULL);
+}
+
 void	*monitor(void *arg)
 {
 	t_table	*table;
-	int		i;
-	long	time_since_meal;
 
 	table = (t_table *)arg;
 	while (!check_stop(table))
 	{
-		i = -1;
-		while (++i < table->nbr_philos)
-		{
-			pthread_mutex_lock(&table->philos[i].meal_mutex);
-			time_since_meal = get_time() - table->philos[i].last_meal_time;
-			pthread_mutex_unlock(&table->philos[i].meal_mutex);
-			if (time_since_meal > table->time_to_die)
-			{
-				pthread_mutex_lock(&table->stop_mutex);
-				table->stop = true;
-				pthread_mutex_unlock(&table->stop_mutex);
-				print_action(&table->philos[i], "died");
-				return (NULL);
-			}
-		}
+		if (philo_death_check(table))
+			return (NULL);
 		if (check_meals(table))
 		{
 			pthread_mutex_lock(&table->stop_mutex);
