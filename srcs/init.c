@@ -6,21 +6,23 @@
 /*   By: rdalal <rdalal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:41:16 by rdalal            #+#    #+#             */
-/*   Updated: 2025/04/28 21:03:01 by rdalal           ###   ########.fr       */
+/*   Updated: 2025/04/30 15:41:50 by rdalal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+
 static int	valid_input(int argc, char **argv)
 {
 	int	i;
 
-	i = 0;
-	while (++i < argc)
+	i = 1;
+	while (i < argc)
 	{
-		if (ft_atoi(argv[i]) <= 0)
-			return (1);
+		if (!check_valid(argv[i]))
+			return (printf("Error; arg is invalid %s\n", argv[i]), 1);
+		i++;
 	}
 	if (ft_atoi(argv[1]) > MAX_PHILOS)
 	{
@@ -33,7 +35,7 @@ static int	valid_input(int argc, char **argv)
 int	init_table(t_table *table, int argc, char **argv)
 {
 	if (valid_input(argc, argv))
-		return (1);
+		return (0);
 	if (argc < 5 || argc > 6)
 		return (1);
 	table->nbr_philos = ft_atoi(argv[1]);

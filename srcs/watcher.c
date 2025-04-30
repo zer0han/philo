@@ -6,34 +6,11 @@
 /*   By: rdalal <rdalal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:16:38 by rdalal            #+#    #+#             */
-/*   Updated: 2025/04/28 21:17:03 by rdalal           ###   ########.fr       */
+/*   Updated: 2025/04/30 16:24:34 by rdalal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	*philo_routine(void *arg)
-{
-	t_philo	*philo;
-
-	philo = (t_philo *)arg;
-	if (philo->table->nbr_philos == 1)
-	{
-		pthread_mutex_lock(philo->left_fork);
-		print_action(philo, "has taken a fork");
-		ft_sleep(philo->table->time_to_die + 10, philo->table);
-		return (NULL);
-	}
-	while (!check_stop(philo->table))
-	{
-		take_fork(philo);
-		philo_eat(philo);
-		print_action(philo, "is sleeping");
-		ft_sleep(philo->table->time_to_sleep, philo->table);
-		print_action(philo, "is thinking");
-	}
-	return (NULL);
-}
 
 static bool	check_meals(t_table *table)
 {

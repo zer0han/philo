@@ -6,7 +6,7 @@
 /*   By: rdalal <rdalal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 17:38:27 by rdalal            #+#    #+#             */
-/*   Updated: 2025/04/28 21:20:16 by rdalal           ###   ########.fr       */
+/*   Updated: 2025/04/30 15:17:34 by rdalal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <pthread.h>
 # include <semaphore.h>
 # include <stdbool.h>
+# include <limits.h>
 
 # define TAKE_FORK "has taken a fork"
 # define EATING "is eating"
@@ -69,10 +70,14 @@ void	cleanup(t_table *table);
 int		error_msg(char *msg);
 
 /**utils**/
-int		ft_atoi(const char *str);
 int		start_threads(t_table *table);
 long	get_time(void);
 void	ft_sleep(long duration, t_table *table);
+
+/**utils2**/
+int		ft_atoi(const char *str);
+long	ft_atol(char *s);
+bool	check_valid(char *str);
 
 /**init**/
 int		init_table(t_table *table, int argc, char **argv);
