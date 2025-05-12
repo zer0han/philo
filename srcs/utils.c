@@ -6,7 +6,7 @@
 /*   By: rdalal <rdalal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:41:23 by rdalal            #+#    #+#             */
-/*   Updated: 2025/04/30 14:35:31 by rdalal           ###   ########.fr       */
+/*   Updated: 2025/05/03 19:57:12 by rdalal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,23 @@ void	ft_sleep(long duration, t_table *table)
 {
 	long	start;
 
+	(void)table;
 	start = get_time();
-	while (!check_stop(table) && (get_time() - start) < duration)
-		usleep(100);
+	while ((get_time() - start) < duration)
+		usleep(50);
+}
+
+void	*ft_memset(void *s, int c, size_t n)
+{
+	size_t			i;
+	unsigned char	*str;
+
+	i = 0;
+	str = (unsigned char *)s;
+	while (i < n)
+	{
+		str[i] = c;
+		i++;
+	}
+	return (s);
 }

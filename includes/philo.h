@@ -6,7 +6,7 @@
 /*   By: rdalal <rdalal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 17:38:27 by rdalal            #+#    #+#             */
-/*   Updated: 2025/04/30 15:17:34 by rdalal           ###   ########.fr       */
+/*   Updated: 2025/05/03 18:07:48 by rdalal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@
 # include <stdbool.h>
 # include <limits.h>
 
-# define TAKE_FORK "has taken a fork"
-# define EATING "is eating"
-# define SLEEPING "is sleeping"
-# define THINKING "is thinking"
-# define DEAD "is dead"
+# define TAKE_FORK "\x1b[38;2;144;238;144mhas taken a fork\x1b[0m"
+# define EATING "\x1b[38;2;135;206;235mis eating\x1b[0m"
+# define SLEEPING "\x1b[38;2;255;215;0mis sleeping\x1b[0m"
+# define THINKING "\x1b[38;2;218;112;214mis thinking\x1b[0m"
+# define DEAD "\x1b[38;2;251;73;52m is dead\x1b[0m"
 # define MAX_PHILOS 200
 
 /*structs*/
@@ -54,6 +54,7 @@ struct s_table
 	long			time_to_die;
 	long			time_to_eat;
 	long			time_to_sleep;
+	long			time_to_think;
 	int				meals_required;
 	bool			stop;
 	long			start_time;
@@ -67,12 +68,12 @@ struct s_table
 
 /**clean**/
 void	cleanup(t_table *table);
-int		error_msg(char *msg);
 
 /**utils**/
 int		start_threads(t_table *table);
 long	get_time(void);
 void	ft_sleep(long duration, t_table *table);
+void	*ft_memset(void *s, int c, size_t n);
 
 /**utils2**/
 int		ft_atoi(const char *str);

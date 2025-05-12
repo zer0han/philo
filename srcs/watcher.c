@@ -6,7 +6,7 @@
 /*   By: rdalal <rdalal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:16:38 by rdalal            #+#    #+#             */
-/*   Updated: 2025/04/30 16:24:34 by rdalal           ###   ########.fr       */
+/*   Updated: 2025/05/12 20:24:36 by rdalal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static bool	check_meals(t_table *table)
 
 	if (table->meals_required == -1)
 		return (false);
+	if (table->meals_required == 0)
+		return (printf("it is done\n"), true);
 	full_count = 0;
 	i = -1;
 	while (++i < table->nbr_philos)

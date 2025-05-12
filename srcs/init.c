@@ -6,12 +6,11 @@
 /*   By: rdalal <rdalal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:41:16 by rdalal            #+#    #+#             */
-/*   Updated: 2025/04/30 15:41:50 by rdalal           ###   ########.fr       */
+/*   Updated: 2025/05/12 20:23:11 by rdalal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
 
 static int	valid_input(int argc, char **argv)
 {
@@ -21,7 +20,7 @@ static int	valid_input(int argc, char **argv)
 	while (i < argc)
 	{
 		if (!check_valid(argv[i]))
-			return (printf("Error; arg is invalid %s\n", argv[i]), 1);
+			return (printf("Error: arg is invalid %s\n", argv[i]), 1);
 		i++;
 	}
 	if (ft_atoi(argv[1]) > MAX_PHILOS)
@@ -39,10 +38,17 @@ int	init_table(t_table *table, int argc, char **argv)
 	if (argc < 5 || argc > 6)
 		return (1);
 	table->nbr_philos = ft_atoi(argv[1]);
+	if (table->nbr_philos < 1)
+		return (printf("ERROR: 0 philos\n"), 1);
 	table->time_to_die = ft_atoi(argv[2]);
 	table->time_to_eat = ft_atoi(argv[3]);
 	table->time_to_sleep = ft_atoi(argv[4]);
+	table->time_to_think = 0;
+	if (table->time_to_sleep <= table->time_to_eat)
+		table->time_to_think = (table->time_to_eat - table->time_to_sleep) + 1;
 	table->meals_required = -1;
+	if (table->meals_required == 0)
+		return (printf("0 meals required c'est fini\n"), 1);
 	if (argc == 6)
 		table->meals_required = ft_atoi(argv[5]);
 	table->start_time = get_time();
